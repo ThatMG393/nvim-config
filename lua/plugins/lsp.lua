@@ -21,10 +21,12 @@ local M = {
 }
 
 function M.config()
+	local lspconfig = require("lspconfig")
+
 	local client_capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 	client_capabilities.textDocument.completion.completionItem.snippetSupport = false
 
-	local on_attach = function (client, bufnr)
+	local on_attach = function(client, bufnr)
 		print(client.name .. " attached!")
 	end
 
@@ -34,12 +36,12 @@ function M.config()
 			on_attach = on_attach
 		}
 
-		lsp = vim.split(lsp, "@")[1] -- :gsub("-", "_")
+		lsp = vim.split(lsp, "@")[1]
 		local ok, settings = pcall(require, "settings.lspservers." .. lsp)
 		if ok then
 			print("Loading config for ".. lsp)
 			lsp_opts = vim.tbl_deep_extend("force", settings, lsp_opts)
-		end
+		end	
 
 		if lsp == "luau_lsp" then
 			require("luau-lsp").setup {
@@ -54,9 +56,9 @@ function M.config()
 					settings = settings or { }
 				}
 			}
-		else
-			require('lspconfig')[lsp].setup(lsp_opts)
 		end
+
+		lspconfig[lsp].setup(lsp_opts)
 	end
 
 	local signs = {

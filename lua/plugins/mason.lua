@@ -20,12 +20,13 @@ function M.config()
 			}
 		},
 		log_level = vim.log.levels.INFO,
-		max_concurrent_installers = 4
+		max_concurrent_installers = 4,
+		PATH = "prepend"
 	}
 
 	require('mason-lspconfig').setup {
 		ensure_installed = require('settings.languages').lang_servers,
-		automatic_installation = true
+		automatic_installation = true,
 	}
 end
 

@@ -8,11 +8,15 @@ local M = {
 		{
 			"JoosepAlviste/nvim-ts-context-commentstring",
 			event = "VeryLazy",
-		}
+		},
 	}
 }
 
-function M.config()	
+function M.config()
+	if vim.bo.filetype == "luau" then
+		require('luau-lsp').treesitter()
+	end
+
 	require('nvim-treesitter.configs').setup {
 		ensure_installed = require('settings.languages').langs,
 		highlight = {
@@ -30,7 +34,7 @@ function M.config()
 	}
 
 	vim.g.skip_ts_context_commentstring_module = true
-	require('ts_context_commentstring').setup {}
+	require('ts_context_commentstring').setup { }
 end
 
 return M

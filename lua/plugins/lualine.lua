@@ -1,5 +1,6 @@
 local M = {
 	  "nvim-lualine/lualine.nvim",
+	  lazy = false,
 	  events = {
 		  "VimEnter",
 		  "InsertEnter",
@@ -7,10 +8,18 @@ local M = {
 		  "BufAdd",
 		  "BufNew",
 		  "BufReadPost"
+	  },
+	  dependencies = {
+		  {
+			  "nvim-tree/nvim-web-devicons"
+		  }
 	  }
 }
 
 function M.config()
+	local ok, lualine = pcall(require, 'lualine')
+	if not ok then return end
+
     local hide_in_width = function()
         return vim.fn.winwidth(0) > 80
     end
@@ -21,7 +30,7 @@ function M.config()
         sections = { "error", "warn" },
         symbols = { error = " ", warn = " " },
         colored = true,
-        always_visible = true,
+        always_visible = true
     }
 
     local diff = {
@@ -29,24 +38,22 @@ function M.config()
         colored = true,
         always_visible = false,
         symbols = { added = " ", modified = " ", removed = " " }, -- changes diff symbols
-        cond = hide_in_width,
+        cond = hide_in_width
     }
 
     local filetype = {
         "filetype",
-        icons_enabled = true,
+        icons_enabled = true
     }
 
     local location = {
         "location",
-        padding = 0,
+        padding = 0
     }
 
-    local indent = function()
-        return "indent: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
-    end
+    local indent = "indent: " .. vim.fn.shiftwidth()
 
-    require('lualine').setup {
+    lualine.setup {
         options = {
             globalstatus = true,
             icons_enabled = true,

@@ -2,7 +2,8 @@ local M = {
 	'goolord/alpha-nvim',
 	dependencies = {
 		'nvim-tree/nvim-web-devicons'
-	}
+	},
+	lazy = false
 }
 
 function M.config()

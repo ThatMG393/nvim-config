@@ -11,6 +11,9 @@ local M = {
 			"hrsh7th/cmp-buffer"
 		},
 		{
+			"hrsh7th/cmp-nvim-lsp-signature-help"
+		},
+		{
 			"L3MON4D3/LuaSnip",
 			event = "InsertEnter",
 			dependencies = {
@@ -69,7 +72,8 @@ function M.config()
 		sources = {
 			{ name = "nvim_lsp" },
 			{ name = "nvim_lua" },
-			{ name = "buffer" }
+			{ name = "buffer" },
+			{ name = "nvim_lsp_signature_help" }
 		},
 		window = {
 			completion = cmp.config.window.bordered(),
@@ -87,7 +91,7 @@ function M.config()
 			behavior = cmp.ConfirmBehavior.Replace
 		},
 		experimental = {
-			ghost_text = true,
+			ghost_text = false,
 		},
 		mapping = cmp.mapping.preset.insert {
 			["<C-k>"] = cmp.mapping.select_prev_item(),
